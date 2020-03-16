@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 var path = require('path')
 const express = require('express')
+const cors = require('cors')
 const mockAPIResponse = require('./mockAPI.js')
 var aylien = require("aylien_textapi");
 var textapi = new aylien({
@@ -10,7 +11,11 @@ var textapi = new aylien({
     });
 
 
+
+
 const app = express()
+
+app.use(cors())
 
 app.use(express.static('dist'))
 
@@ -26,6 +31,15 @@ app.listen(8081, function () {
     console.log('Example app listening on port 8081!')
 })
 
-app.get('/test', function (req, res) {
-    res.send(mockAPIResponse)
+app.get('/sentiment', function (req, res) {
+    textapi.sentiment({
+        url:'https://www.theguardian.com/world/2020/mar/16/coronavirus-symptoms-should-i-see-doctor-cough-covid-19',
+        mode: 'document'
+      }, function(error, response) {
+        if (error === null) {
+          console.log(response);
+          res.send(response)
+        }
+      });
+   
 })

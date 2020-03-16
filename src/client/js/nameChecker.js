@@ -1,14 +1,8 @@
-function checkForName(inputText) {
-    console.log("::: Running checkForName :::", inputText);
-    let names = [
-        "Picard",
-        "Janeway",
-        "Kirk",
-        "Archer",
-        "Georgiou"
-    ]
+const validator = require ('validator')
 
-    if(names.includes(inputText)) {
+function checkForName(inputText) {
+    console.log("::: Running checkForName :::", inputText);  
+    if(validator.isURL(inputText)) {
         alert("Welcome, Captain!")
     }
 }
