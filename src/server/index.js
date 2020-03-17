@@ -4,6 +4,7 @@ var path = require('path')
 const express = require('express')
 const cors = require('cors')
 const mockAPIResponse = require('./mockAPI.js')
+const bodyParser = require('body-parser')
 var aylien = require("aylien_textapi");
 var textapi = new aylien({
     application_id: process.env.API_ID,
@@ -19,6 +20,9 @@ app.use(cors())
 
 app.use(express.static('dist'))
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 console.log(__dirname)
 
 app.get('/', function (req, res) {
@@ -31,15 +35,18 @@ app.listen(8081, function () {
     console.log('Example app listening on port 8081!')
 })
 
-app.get('/sentiment', function (req, res) {
-    textapi.sentiment({
-        url:'https://www.theguardian.com/world/2020/mar/16/coronavirus-symptoms-should-i-see-doctor-cough-covid-19',
-        mode: 'document'
-      }, function(error, response) {
-        if (error === null) {
-          console.log(response);
-          res.send(response)
-        }
-      });
+
+app.post('/sentiment', function (req, res) {
+  console.log (req.body);
+  textapi.sentiment({
+    url: req.body.url,
+    mode: 'document'
+  }, function(error, response) {
+    if (error === null) {
+      console.log(response);
+      res.send(response);
+    }
+  })
+ });
    
-})
+
