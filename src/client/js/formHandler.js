@@ -1,37 +1,35 @@
- function handleSubmit(event) {
+function handleSubmit(event) {
     event.preventDefault()
 
     // check what text was put into the form field
-    const urlt = document.getElementById('name').value
-    Client.checkForName(urlt)
+    const userUrl = document.getElementById('name').value
+    Client.validateUrl(userUrl)
 
     console.log("::: Form Submitted :::")
-    postData('http://localhost:8081/sentiment', {url: urlt})
-    .then(function (data) {
-    document.getElementById('polarity').innerHTML = data.polarity
-    document.getElementById('subjectivity').innerHTML = data.subjectivity
-    document.getElementById('text').innerHTML = data.text
-    })
-    
+    getSentiment(userUrl)
+        .then(function (result) {
+            document.getElementById('polarity').innerHTML = result.polarity
+            document.getElementById('subjectivity').innerHTML = result.subjectivity
+            document.getElementById('text').innerHTML = result.text
+        })
+
 }
-const postData = async (url = '', data = {}) => {
-    console.log('I am the data' + data);
-    const response = await fetch(url, {
+
+function getSentiment(userUrl) {
+
+    return fetch('http://localhost:8081/sentiment', {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
-    });
-
-    try {
-        const newData = await response.json();
-        console.log('une jam' + newData);
-        return newData;
-    } catch (error) {
-        console.log("error", error);
-    }
+        body: JSON.stringify({ url: userUrl })
+    })
+        .then(result => result.json())
 }
 
-export { handleSubmit }
+
+export { handleSubmit,
+        getSentiment };
+
+
