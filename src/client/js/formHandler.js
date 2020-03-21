@@ -17,7 +17,7 @@ function handleSubmit(event) {
 
 function getSentiment(userUrl) {
 
-    return fetch('http://localhost:8081/sentiment', {
+    return fetch('http://localhost:3000/sentiment', {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
