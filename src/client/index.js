@@ -1,10 +1,7 @@
 import { validateUrl } from './js/urlValidator'
 import { handleSubmit } from './js/formHandler'
 
-console.log(validateUrl);
 
-alert("I EXIST")
-console.log("CHANGE!!");
 
 import './styles/resets.scss'
 import './styles/base.scss'

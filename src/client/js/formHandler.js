@@ -10,9 +10,9 @@ function handleSubmit(event) {
     console.log("::: Form Submitted :::")
     getSentiment(userUrl)
         .then(function (result) {
-            document.getElementById('polarity').innerHTML = result.polarity
-            document.getElementById('subjectivity').innerHTML = result.subjectivity
-            document.getElementById('text').innerHTML = result.text
+            document.getElementById('polarity').innerHTML = 'Polarity: ' + result.polarity
+            document.getElementById('subjectivity').innerHTML = 'Subjectivity: ' + result.subjectivity
+            document.getElementById('text').innerHTML ='Text: ' + result.text
         })
 
 }
